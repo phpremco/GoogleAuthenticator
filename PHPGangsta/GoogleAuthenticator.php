@@ -98,18 +98,18 @@ class PHPGangsta_GoogleAuthenticator
      *
      * @return string
      */
-    public function getQRCodeGoogleUrl($name, $secret, $title = null, $params = array())
+    public function getQRCodeGoogleUrl($name, $secret, $title = null, $params = [])
     {
         $width = !empty($params['width']) && (int) $params['width'] > 0 ? (int) $params['width'] : 200;
         $height = !empty($params['height']) && (int) $params['height'] > 0 ? (int) $params['height'] : 200;
-        $level = !empty($params['level']) && array_search($params['level'], array('L', 'M', 'Q', 'H')) !== false ? $params['level'] : 'M';
+        $level = !empty($params['level']) && array_search($params['level'], ['L', 'M', 'Q', 'H']) !== false ? $params['level'] : 'M';
 
         $urlencoded = urlencode('otpauth://totp/'.$name.'?secret='.$secret.'');
         if (isset($title)) {
             $urlencoded .= urlencode('&issuer='.urlencode($title));
         }
 
-        return "https://api.qrserver.com/v1/create-qr-code/?data=$urlencoded&size=${width}x${height}&ecc=$level";
+        return "https://api.qrserver.com/v1/create-qr-code/?data=$urlencoded&size={$width}x{$height}&ecc=$level";
     }
 
     /**
@@ -173,7 +173,7 @@ class PHPGangsta_GoogleAuthenticator
         $base32charsFlipped = array_flip($base32chars);
 
         $paddingCharCount = substr_count($secret, $base32chars[32]);
-        $allowedValues = array(6, 4, 3, 1, 0);
+        $allowedValues = [6, 4, 3, 1, 0];
         if (!in_array($paddingCharCount, $allowedValues)) {
             return false;
         }
@@ -192,7 +192,16 @@ class PHPGangsta_GoogleAuthenticator
                 return false;
             }
             for ($j = 0; $j < 8; ++$j) {
-                $x .= str_pad(base_convert(@$base32charsFlipped[@$secret[$i + $j]], 10, 2), 5, '0', STR_PAD_LEFT);
+                $x .= str_pad(
+                    base_convert(
+                        $base32charsFlipped[($secret[$i + $j] ?? 0)] ?? 0,
+                        10,
+                        2
+                    ),
+                    5,
+                    '0',
+                    STR_PAD_LEFT
+                );
             }
             $eightBits = str_split($x, 8);
             for ($z = 0; $z < count($eightBits); ++$z) {
@@ -210,13 +219,13 @@ class PHPGangsta_GoogleAuthenticator
      */
     protected function _getBase32LookupTable()
     {
-        return array(
+        return [
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', //  7
             'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', // 15
             'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', // 23
             'Y', 'Z', '2', '3', '4', '5', '6', '7', // 31
             '=',  // padding char
-        );
+        ];
     }
 
     /**

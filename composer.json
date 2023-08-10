@@ -1,5 +1,5 @@
 {
-    "name": "phpgangsta/googleauthenticator",
+    "name": "phpremco/googleauthenticator",
     "description": "Google Authenticator 2-factor authentication",
     "version": "1.0.0",
     "type": "library",
@@ -14,11 +14,11 @@
         }
     ],
     "support": {
-        "source": "https://github.com/PHPGangsta/GoogleAuthenticator",
-        "issues": "https://github.com/PHPGangsta/GoogleAuthenticator/issues"
+        "source": "https://github.com/phpremco/GoogleAuthenticator",
+        "issues": "https://github.com/phpremco/GoogleAuthenticator/issues"
     },
     "require": {
-        "php": ">=5.3"
+        "php": ">=8.2"
     },
 	"autoload": {
 		"classmap": ["PHPGangsta/GoogleAuthenticator.php"]
