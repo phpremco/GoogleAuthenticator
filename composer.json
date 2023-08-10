@@ -1,7 +1,7 @@
 {
     "name": "phpremco/googleauthenticator",
     "description": "Google Authenticator 2-factor authentication",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "type": "library",
     "keywords": ["GoogleAuthenticator", "TOTP", "rfc6238"],
     "license": "BSD-4-Clause",
